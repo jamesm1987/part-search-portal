@@ -22,8 +22,8 @@ interface IndexProps {
 
 const breadcrumbs: BreadcrumbItem[] = [
   {
-    title: 'Dashboard',
-    href: '/dashboard/',
+    title: 'Users',
+    href: '/users/',
   },
 ];
 
@@ -39,7 +39,7 @@ const handleViewUser = (user: User) => {
   return (
     <AppLayout breadcrumbs={breadcrumbs}>
       <div className="py-12">
-        <Head title="Dashboard" />
+        <Head title="Users" />
         <div className="mx-auto max-w-7xl sm:px-6 lg:px-8 flex flex-col gap-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

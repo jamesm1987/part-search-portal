@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label"
 export function CreateUserModal() {
   const [open, setOpen] = React.useState(false)
   const [name, setName] = React.useState("")
+  const [email, setEmail] = React.useState("")
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -27,6 +28,7 @@ export function CreateUserModal() {
       onSuccess: () => {
         setOpen(false)
         setName("")
+        setEmail("")
         // Optionally redirect to edit page if backend returns `user.id`
         // router.visit(`/users/${newUserId}/edit`)
       },
@@ -44,6 +46,15 @@ export function CreateUserModal() {
           required
         />
       </div>
+      <div className="grid gap-3">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>      
       <Button type="submit">Create</Button>
     </form>
   )
@@ -58,7 +69,7 @@ export function CreateUserModal() {
           <DialogHeader>
             <DialogTitle>Create User</DialogTitle>
             <DialogDescription>
-              Enter the user name
+              Enter the user details
             </DialogDescription>
           </DialogHeader>
           {Form}
@@ -76,7 +87,7 @@ export function CreateUserModal() {
         <DrawerHeader className="text-left">
           <DrawerTitle>Create User</DrawerTitle>
           <DrawerDescription>
-            Enter the user name
+            Enter the user details
           </DrawerDescription>
         </DrawerHeader>
         {Form}

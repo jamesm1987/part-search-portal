@@ -24,6 +24,10 @@ export const columns = ({
     accessorKey: 'name',
     header: 'Name',
   },
+{
+    accessorKey: 'email',
+    header: 'Email',
+  },
   {
     id: 'actions',
     cell: ({ row }) => {

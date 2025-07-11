@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\User;
+use App\Http\Requests\UserCreateRequest;
+
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -19,4 +22,18 @@ class UserController extends Controller
             'users' => $users
         ]);
     }
+
+
+    public function store(UserCreateRequest $request): RedirectResponse
+    {
+        $validated = $request->validated();
+        $validated['password'] = Hash::make($validated['password']);
+        
+        $user = User::create($validated);
+        
+        return to_route('users.index')->with('toast', [
+            'type' => 'success',
+            'message' => 'User created successfully',
+        ]);
+    }    
 }
