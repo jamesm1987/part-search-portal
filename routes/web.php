@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PartController;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -15,6 +16,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     Route::resource('users', UserController::class);
+    Route::resource('parts', PartController::class);
 });
 
 require __DIR__.'/settings.php';

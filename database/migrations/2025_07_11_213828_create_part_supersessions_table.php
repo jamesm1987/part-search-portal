@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('parts', function (Blueprint $table) {
+        Schema::create('supersessions', function (Blueprint $table) {
             $table->id();
-            $table->string('part_number')->unique();
-            $table->enum('status', ['active', 'obsolete', 'superseded'])->default('active');
+            $table->foreignId('old_part_id')->constrained('parts')->cascadeOnDelete();
+            $table->foreignId('new_part_id')->constrained('parts')->cascadeOnDelete();
             $table->timestamps();
+
+            $table->unique(['old_part_id', 'new_part_id']);
         });
     }
 
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('parts');
+        Schema::dropIfExists('part_alias');
     }
 };
