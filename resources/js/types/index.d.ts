@@ -48,3 +48,11 @@ export interface Part {
     created_at: string;
     updated_at: string;
 }
+
+export interface Supplier {
+    id: number;
+    name: string;
+    logo_path: string;
+    created_at: string;
+    updated_at: string;
+}

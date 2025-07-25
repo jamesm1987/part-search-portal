@@ -15,35 +15,68 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function CreatePartModal() {
+export function CreateSupplierModal() {
   const [open, setOpen] = React.useState(false)
-  const [part_number, setPartNumber] = React.useState("")
+  const [name, setName] = React.useState("")
+  const [logoUrl, setLogoUrl] = React.useState("")
   const isDesktop = useMediaQuery("(min-width: 768px)")
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
-    router.post("/parts", { part_number }, {
+    router.post("/suppliers", { name, logoUrl }, {
       onSuccess: () => {
         setOpen(false)
-        setPartNumber("")
+        setName("")
+        setLogoUrl("")
         // Optionally redirect to edit page if backend returns `user.id`
         // router.visit(`/users/${newUserId}/edit`)
       },
     })
   }
 
+  const onLogoAdded = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const file = e.target.files?.[0];
+
+      if (file) {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          setLogoUrl(reader.result as string);
+        };
+        reader.readAsDataURL(file);
+      }
+  }
+
   const Form = (
     <form onSubmit={handleSubmit} className="grid items-start gap-6 px-4">
       <div className="grid gap-3">
-        <Label htmlFor="part_number">Part Number</Label>
+        <Label htmlFor="name">Name</Label>
         <Input
-          id="part_number"
-          value={part_number}
-          onChange={(e) => setPartNumber(e.target.value)}
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           required
         />
-      </div>   
+      </div> 
+
+      <div className="grid gap-3">
+        <Label htmlFor="logo">Logo</Label>
+        <Input
+          id="logo_path"
+          type="file"
+          onChange={onLogoAdded}
+          required
+        />
+
+              {logoUrl && (
+        <img
+          src={logoUrl}
+          alt="Uploaded Preview"
+          className="mt-4 max-w-xs rounded-md border border-gray-300"
+        />
+      )}
+      </div>         
       <Button type="submit">Create</Button>
     </form>
   )
@@ -52,13 +85,13 @@ export function CreatePartModal() {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>Create Part</Button>
+          <Button>Create Supplier</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Create Part</DialogTitle>
+            <DialogTitle>Create Supplier</DialogTitle>
             <DialogDescription>
-              Enter the part number
+              Enter the name
             </DialogDescription>
           </DialogHeader>
           {Form}
@@ -70,13 +103,13 @@ export function CreatePartModal() {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button>Create Part</Button>
+        <Button>Create Supplier</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader className="text-left">
-          <DrawerTitle>Create Part</DrawerTitle>
+          <DrawerTitle>Create Supplier</DrawerTitle>
           <DrawerDescription>
-            Enter the part number
+            Enter the name
           </DrawerDescription>
         </DrawerHeader>
         {Form}

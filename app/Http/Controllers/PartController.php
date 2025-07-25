@@ -27,12 +27,18 @@ class PartController extends Controller
     public function store(PartCreateRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        
         $part = Part::create($validated);
         
         return to_route('parts.index')->with('toast', [
             'type' => 'success',
             'message' => 'Part created successfully',
         ]);
-    }    
+    }
+
+    public function show(Part $part)
+    {
+        return Inertia::render('parts/show', [
+            'part' => $part
+        ]);
+    }
 }

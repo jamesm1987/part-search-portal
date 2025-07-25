@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Supplier extends Model
 {
@@ -13,11 +14,12 @@ class Supplier extends Model
 
     public function parts()
     {
-        return $this->hasMany(PartAlias::class);
+        return $this->hasMany(SupplierPart::class);
     }
 
-    public function supersessions()
+    public function logoUrl(): ?string
     {
-        return $this->hasMany(PartAlias::class, 'current_part_id');
+        return asset('storage/' . ltrim($this->logo_path, '/'));
     }
+
 }

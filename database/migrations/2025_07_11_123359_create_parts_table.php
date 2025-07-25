@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('part_number')->unique();
             $table->enum('status', ['active', 'obsolete', 'superseded'])->default('active');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

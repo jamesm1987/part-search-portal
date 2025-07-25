@@ -11,4 +11,14 @@ class SupplierPart extends Model
         'supplier_id',
         'part_number',
     ];
+
+    public function supplier()
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    public function part()
+    {
+        return $this->belongsTo(Part::class);
+    }
 }
